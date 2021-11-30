@@ -11,7 +11,7 @@
 Trong quá trình tìm kiếm, phân tích, nhóm em đã tìm được một số repo mã nguồn trên github có 23 mẫu thiết kế như sau.
 
 ## Tóm tắt:
-*Nhóm em đã tìm và phân tích 4 repo:
+*Nhóm em đã tìm và phân tích 4 repo:*
 
 	 1. https://github.com/shuleisanshi/myblog
 	 
@@ -19,12 +19,14 @@ Trong quá trình tìm kiếm, phân tích, nhóm em đã tìm được một s�
 	 
 	 3. https://github.com/braisdom/ObjectiveSql
 	 
-	 4. https://github.com/Anuken/Mindustry*
+	 4. https://github.com/Anuken/Mindustry
+	 
+	 *Trong đó, repo 2 là code minh họa 23 design patterns, các repo còn lại là các dự án thực tế.*
 
 ## Repo 1: Link https://github.com/shuleisanshi/myblog
 
-- Giới thiệu: Repo này là mã nguồn của 1 blog cá nhân của tác giả. 
-Trong repo này, tác giả đã sử dụng 1 mẫu thiết kế thuộc nhóm *Structural* là **Adapter** và 1 mẫu thiết kế thuộc nhóm *Creational* là **Builder**.
+- *Giới thiệu:* Repo này là mã nguồn của 1 blog cá nhân của tác giả. 
+Trong repo này, tác giả đã sử dụng 1 mẫu thiết kế thuộc nhóm *Structural* là **Adapter**.
 
 * Dễ thấy, mẫu thiết kế **Adapter** được tác giả áp dụng 10 lần, theo từng nhóm các lớp và giao diện, mỗi nhóm đều có đầy đủ Adaptee, Adapter, Target và Client:
   + Các Adaptee là các giao diện không tương thích, cần được tích hợp, nằm trong package [mapper](https://github.com/shuleisanshi/myblog/blob/f337b7bded4bdc343227a467873e5cfdafac39c4/src/main/java/com/shulei/ssm/blog/mapper), gồm: [ArticleMapper](https://github.com/shuleisanshi/myblog/blob/f337b7bded4bdc343227a467873e5cfdafac39c4/src/main/java/com/shulei/ssm/blog/mapper/ArticleMapper.java), [CategoryMapper](https://github.com/shuleisanshi/myblog/blob/f337b7bded4bdc343227a467873e5cfdafac39c4/src/main/java/com/shulei/ssm/blog/mapper/CategoryMapper.java), [CommentMapper](https://github.com/shuleisanshi/myblog/blob/f337b7bded4bdc343227a467873e5cfdafac39c4/src/main/java/com/shulei/ssm/blog/mapper/CommentMapper.java), [LinkMapper](https://github.com/shuleisanshi/myblog/blob/f337b7bded4bdc343227a467873e5cfdafac39c4/src/main/java/com/shulei/ssm/blog/mapper/LinkMapper.java), [MenuMapper](https://github.com/shuleisanshi/myblog/blob/f337b7bded4bdc343227a467873e5cfdafac39c4/src/main/java/com/shulei/ssm/blog/mapper/MenuMapper.java), [NoticeMapper](https://github.com/shuleisanshi/myblog/blob/f337b7bded4bdc343227a467873e5cfdafac39c4/src/main/java/com/shulei/ssm/blog/mapper/NoticeMapper.java), [OptionMapper](https://github.com/shuleisanshi/myblog/blob/f337b7bded4bdc343227a467873e5cfdafac39c4/src/main/java/com/shulei/ssm/blog/mapper/OptionMapper.java), [PageMapper](https://github.com/shuleisanshi/myblog/blob/f337b7bded4bdc343227a467873e5cfdafac39c4/src/main/java/com/shulei/ssm/blog/mapper/PageMapper.java), [TagMapper](https://github.com/shuleisanshi/myblog/blob/f337b7bded4bdc343227a467873e5cfdafac39c4/src/main/java/com/shulei/ssm/blog/mapper/TagMapper.java), [UserMapper](https://github.com/shuleisanshi/myblog/blob/f337b7bded4bdc343227a467873e5cfdafac39c4/src/main/java/com/shulei/ssm/blog/mapper/UserMapper.java).
@@ -48,7 +50,7 @@ Trong repo này, tác giả đã sử dụng 1 mẫu thiết kế thuộc nhóm 
 	    List<Menu> listMenu() ;
 	}
 	```
-	Giao diện trên có chứa các phương thức dùng để chèn, xóa, cập nhật menu và một phương thức trả về 1 menu với mã số cho trước.
+		Giao diện trên có chứa các phương thức dùng để chèn, xóa, cập nhật menu và một phương thức trả về 1 menu với mã số cho trước.
 
 	- Giao diện [MenuService](https://github.com/shuleisanshi/myblog/blob/f337b7bded4bdc343227a467873e5cfdafac39c4/src/main/java/com/shulei/ssm/blog/service/MenuService.java) (vai trò Target):
 	```java
@@ -65,7 +67,7 @@ Trong repo này, tác giả đã sử dụng 1 mẫu thiết kế thuộc nhóm 
 	    Menu getMenuById(Integer id);
 	}
 	```
-	Giao diện này có chứa các phương thức dùng để chèn, xóa, cập nhật menu và một phương thức trả về 1 menu với mã số cho trước gần như giống hệt với adaptee MenuMapper, chỉ khác tên và khác kiểu trả về của phương thức update(Menu);
+		Giao diện này có chứa các phương thức dùng để chèn, xóa, cập nhật menu và một phương thức trả về 1 menu với mã số cho trước gần như giống hệt với adaptee MenuMapper, chỉ khác tên và khác kiểu trả về của phương thức update(Menu);
 	
 	- Lớp [MenuServiceImpl](https://github.com/shuleisanshi/myblog/blob/f337b7bded4bdc343227a467873e5cfdafac39c4/src/main/java/com/shulei/ssm/blog/service/impl/MenuService.java) (vai trò Adapter):
 	```java
@@ -102,7 +104,7 @@ Trong repo này, tác giả đã sử dụng 1 mẫu thiết kế thuộc nhóm 
 	    }
 	}
 	```
-	Lớp này cài đặt tất cả các phương thức trong giao diện MenuService (target).
+		Lớp này cài đặt tất cả các phương thức trong giao diện MenuService (target).
 	
 	- Lớp [BackMenuController](https://github.com/shuleisanshi/myblog/blob/f337b7bded4bdc343227a467873e5cfdafac39c4/src/main/java/com/shulei/ssm/blog/controller/admin/BackMenuController.java) (vai trò Client):
 	```java
@@ -156,7 +158,7 @@ Trong repo này, tác giả đã sử dụng 1 mẫu thiết kế thuộc nhóm 
 	    }
 	}
 	```
-	Đây là lớp dùng để điều khiến, quản lý menu dành riêng cho admin. Lớp này có chứa 1 thuộc tính kiểu MenuService.
+		Đây là lớp dùng để điều khiến, quản lý menu dành riêng cho admin. Lớp này có chứa 1 thuộc tính kiểu MenuService.
 	
    + **Nhận xét:** Khi đối chiếu với mẫu thiết kế Adapter chuẩn trên trang [GPCoder](https://gpcoder.com/4483-huong-dan-java-design-pattern-adapter/), em nhận thấy mẫu thiết kế tác giả dùng ở đây là hoàn toàn tương đồng với mô hình ***Object Adapter – Composition (Chứa trong)*** được nhắc trong bài viết (có lớp mới (Adapter) tham chiếu đến một đối tượng của lớp có sẵn với interface không tương thích (Adaptee), đồng thời cài đặt interface mà người dùng mong muốn (Target), khác với *Class Adapter – Inheritance (Kế thừa)* là mô hình mà lớp mới (Adapter) kế thừa lớp có sẵn với interface không tương thích (Adaptee)).
 
@@ -274,6 +276,7 @@ Có code minh họa theo 3 mẫu thiết kế:
 
 	}
 	```
+		Giao diện này thể hiện đúng vai trò của thành phần Command trong mẫu thiết kế Command.
 	+ Lớp [ConcreteCommandImpl1](https://github.com/simple-android-framework/android_design_patterns_analysis/blob/master/command/lijunhuayc/resource/command/ConcreteCommandImpl1.java) (ngoài ra còn các lớp với vai trò tương đương trong cấu trúc chương trình là [ConcreteCommandImpl2](https://github.com/simple-android-framework/android_design_patterns_analysis/blob/master/command/lijunhuayc/resource/command/ConcreteCommandImpl2.java) và [ConcreteCommandImpl3](https://github.com/simple-android-framework/android_design_patterns_analysis/blob/master/command/lijunhuayc/resource/command/ConcreteCommandImpl.java)):
 	```java
 	public class ConcreteCommandImpl1 implements Command{
@@ -298,6 +301,7 @@ Có code minh họa theo 3 mẫu thiết kế:
 		}
 	    }
 	```
+		 Các lớp này thể hiện đúng vai trò của thành phần ConcreteCommand trong mẫu thiết kế Command.
 	+ Lớp [ReceiverRole](https://github.com/simple-android-framework/android_design_patterns_analysis/blob/master/command/lijunhuayc/resource/command/ReceiverRole.java):
 	```java
 	public class ReceiverRole {
@@ -334,6 +338,7 @@ Có code minh họa theo 3 mẫu thiết kế:
 	      }
 	}
 	```
+		Lớp này thể hiện đúng vai trò của thành phần Receiver trong mẫu thiết kế Command.
 	+ Lớp [ClientRole](https://github.com/simple-android-framework/android_design_patterns_analysis/blob/master/command/lijunhuayc/resource/command/ClientRole.java):
 	```java
 	public class ClientRole {
@@ -350,6 +355,7 @@ Có code minh họa theo 3 mẫu thiết kế:
 	    }
 	}
 	```
+		Lớp này thể hiện đúng vai trò của thành phần Client trong mẫu thiết kế Command.
 	+ Lớp [InvokerRole](https://github.com/simple-android-framework/android_design_patterns_analysis/blob/master/command/lijunhuayc/resource/command/Invoker.java):
 	```java
 	public class InvokerRole {
@@ -374,7 +380,9 @@ Có code minh họa theo 3 mẫu thiết kế:
 	    }   	
 	}
 	```
-+ **Nhận xét:**  Khi đối chiếu đoạn code trên với mẫu thiết kế chuẩn trên [GPCoder](https://gpcoder.com/4686-huong-dan-java-design-pattern-command/), em thấy 2 mẫu hoàn toàn trùng khớp, không có thay đổi gì, thể hiện qua các lớp và giao diện: Command, ConcreteCommandImpl1, ConcreteCommandImpl2, ConcreteCommandImpl3, ClientRole, InvokerRole, ReceiverRole như trên.
+		Lớp này thể hiện đúng vai trò của thành phần Invoker trong mẫu thiết kế Command.
+		
+  + **Nhận xét:**  Khi đối chiếu đoạn code trên với mẫu thiết kế chuẩn trên [GPCoder](https://gpcoder.com/4686-huong-dan-java-design-pattern-command/), em thấy 2 mẫu hoàn toàn trùng khớp, không có thay đổi gì, thể hiện qua các lớp và giao diện: Command, ConcreteCommandImpl1, ConcreteCommandImpl2, ConcreteCommandImpl3, ClientRole, InvokerRole, ReceiverRole như trên.
 
 * [**Iterator**](https://github.com/simple-android-framework/android_design_patterns_analysis/blob/master/iterator/haoxiqiang):
   Tác giả đưa ra ví dụ về mẫu thiết kế Iterator trong file [AndroidMileage.java](https://github.com/simple-android-framework/android_design_patterns_analysis/blob/master/iterator/haoxiqiang/resource/AndroidMileage.java): 
@@ -452,14 +460,339 @@ Có code minh họa theo 3 mẫu thiết kế:
 	    }
 	}
 	```
-+ **Nhận xét:**  Khi đối chiếu đoạn code trên với mẫu thiết kế chuẩn trên [GPCoder](https://gpcoder.com/4724-huong-dan-java-design-pattern-iterator/), em thấy mẫu thiết kế trong repo này có điểm tương đồng với mẫu chuẩn ở chỗ có đầy đủ các thành phân: 
+  + **Nhận xét:**  Khi đối chiếu đoạn code trên với mẫu thiết kế chuẩn trên [GPCoder](https://gpcoder.com/4724-huong-dan-java-design-pattern-iterator/), em thấy mẫu thiết kế trong repo này có điểm tương đồng với mẫu chuẩn ở chỗ có đầy đủ các thành phân: 
 	- Aggregate (interface NameValuePair) là một interface định nghĩa định nghĩa các phương thức để tạo Iterator object.
 	- ConcreteAggregate (class Mileage) cài đặt các phương thức của Aggregate, nó cài đặt interface tạo Iterator để trả về một thể hiện của ConcreteIterator thích hợp.
 	- Iterator (class Iterator<Mileage> - tổng quát là Iterator<T>) là một interface hay abstract class, định nghĩa các phương thức để truy cập và duyệt qua các phần tử.
 	- ConcreteIterator (class ArrayIterator) cài đặt các phương thức của Iterator, giữ index khi duyệt qua các phần tử.
 	- Client (class AndroidMileage) đối tượng sử dụng Iterator Pattern, nó yêu cầu một iterator từ một đối tượng collection để duyệt qua các phần tử mà nó giữ. Các phương thức của iterator được sử dụng để truy xuất các phần tử từ collection theo một trình tự thích hợp.
     + Điểm khác biệt của project này là ở chỗ tất cả các lớp và giao diện đêu là inner class (lớp trong) của Client (class AndroidMileage).
+	
+* [**Builder**](https://github.com/simple-android-framework/android_design_patterns_analysis/tree/master/builder/mr.simple):
+  Tác giả đưa ra ví dụ về mẫu thiết kế Builder trong file [readme.md](https://github.com/simple-android-framework/android_design_patterns_analysis/blob/master/builder/mr.simple/readme.md) của mục này. Ví dụ về việc dùng mẫu thiết kế Builder để tạo các đối tượng máy tính (Computer):
+	```java
+	public abstract class Computer {
+		protected int mCpuCore = 1;
+		protected int mRamSize = 0;
+		protected String mOs = "Dos";
 
+		protected Computer() {
+		}
+
+		public abstract void setCPU(int core);
+
+		public abstract void setRAM(int gb);
+
+		public abstract void setOs(String os);
+
+		@Override
+		public String toString() {
+			return "Computer [mCpuCore=" + mCpuCore + ", mRamSize=" + mRamSize
+					+ ", mOs=" + mOs + "]";
+		}
+	}
+
+	public class AppleComputer extends Computer {
+
+		protected AppleComputer() {
+		}
+
+		@Override
+		public void setCPU(int core) {
+			mCpuCore = core;
+		}
+
+		@Override
+		public void setRAM(int gb) {
+			mRamSize = gb;
+		}
+
+		@Override
+		public void setOs(String os) {
+			mOs = os;
+		}
+	}
+
+	public abstract class Builder {
+	
+		public abstract void buildCPU(int core);
+
+		public abstract void buildRAM(int gb);
+
+		public abstract void buildOs(String os);
+
+		public abstract Computer create();
+	}
+
+	public class ApplePCBuilder extends Builder {
+		private Computer mApplePc = new AppleComputer();
+
+		@Override
+		public void buildCPU(int core) {
+			mApplePc.setCPU(core);
+		}
+
+		@Override
+		public void buildRAM(int gb) {
+			mApplePc.setRAM(gb);
+		}
+
+		@Override
+		public void buildOs(String os) {
+			mApplePc.setOs(os);
+		}
+
+		@Override
+		public Computer create() {
+			return mApplePc;
+		}
+	}
+
+	public class Director {
+		Builder mBuilder = null;
+
+		public Director(Builder builder) {
+			mBuilder = builder;
+		}
+
+		public void construct(int cpu, int ram, String os) {
+			mBuilder.buildCPU(cpu);
+			mBuilder.buildRAM(ram);
+			mBuilder.buildOs(os);
+		}
+	}
+
+	public class Test {
+		public static void main(String[] args) {
+			Builder builder = new ApplePCBuilder();
+			Director pcDirector = new Director(builder);
+			pcDirector.construct(4, 2, "Mac OS X 10.9.1");
+			System.out.println("Computer Info : " + builder.create().toString());
+		}
+	}
+	```
+  + **Nhận xét:** Mẫu thiết kế này có đầy đủ các thành phần chuẩn như mẫu trên [GPCoder](https://gpcoder.com/4434-huong-dan-java-design-pattern-builder/):
+	- Builder: là lớp trừu tượng *Builder*, khai báo phương thức tạo đối tượng Computer chung.
+	- ConcreteBuilder: là lớp *ApplePCBuilder*, khai báo phương thức tạo đối tượng Computer.
+	- Product : là lớp *AppleComputer* (kế thừa lớp trừu tượng *Computer*), đại diện cho đối tượng cần tạo, đối tượng này phức tạp, có nhiều thuộc tính.
+	- Director: là lớp *Director*, là nơi gọi tới Builder để tạo ra đối tượng.
+	
+	Điểm khác biệt giữa 2 mẫu thiết kế là thành phần *Builder* của repo này là lớp trừu tượng, còn thành phần Builder ở trang GPCoder là một giao diện.
+	
+* [**Composite**](https://github.com/simple-android-framework/android_design_patterns_analysis/tree/master/composite/tiny-times):
+	
+	Tác giả đưa ra ví dụ về mẫu thiết kế Builder trong file [readme.md](https://github.com/simple-android-framework/android_design_patterns_analysis/blob/master/composite/tiny-times/readme.md) của mục này. Mẫu thiết kế được đưa ra ở đây giống hệt mẫu chuẩn trên [GPCoder](https://gpcoder.com/4554-huong-dan-java-design-pattern-composite/).
+	
+* [**Facade**](https://github.com/simple-android-framework/android_design_patterns_analysis/tree/master/facade/elsdnwn):
+    + Tác giả đưa ra ví dụ minh họa về mẫu thiết kế được dùng trong quản lý một chiếc ti vi, với các lớp và giao diện:
+	- Lớp TvController đóng vai trò Facade: biết rõ lớp của hệ thống con nào đảm nhận việc đáp ứng yêu cầu của client, sẽ chuyển yêu cầu của client đến các đối tượng của hệ thống con tương ứng: 
+		```java
+		public class TvController {
+		    private PowerSystem mPowerSystem = new PowerSystem();
+		    private VoiceSystem mVoiceSystem = new VoiceSystem();
+		    private ChannelSystem mChannelSystem = new ChannelSystem();
+
+		    public void powerOn() {
+			mPowerSystem.powerOn();
+		    }
+
+		    public void powerOff() {
+			mPowerSystem.powerOff();
+		    }
+
+		    public void turnUp() {
+			mVoiceSystem.turnUp();
+		    }
+
+		    public void turnDown() {
+			mVoiceSystem.turnDown();
+		    }
+
+		    public void nextChannel() {
+			mChannelSystem.next();
+		    }
+
+		    public void prevChannel() {
+			mChannelSystem.prev();
+		    }
+		}
+		```
+	- Lớp PowerSystem, VoiceSystem, ChannelSystem đóng vai trò Subsystems: cài đặt các chức năng của hệ thống con, xử lý công việc được gọi bởi Facade. Các lớp này không cần biết Facade và không tham chiếu đến nó.
+		```java
+		 class PowerSystem {
+		    public void powerOn() {
+			System.out.println("开机");
+		    }
+
+		    public void powerOff() {
+			System.out.println("关机");
+		    }
+		}
+		
+		class VoiceSystem {
+		    public void turnUp() {
+			System.out.println("音量增大");
+		    }
+
+		    public void turnDown() {
+			System.out.println("音量减小");
+		    }
+		}
+		
+		class ChannelSystem {
+		    public void next() {
+			System.out.println("下一频道");
+		    }
+
+		    public void prev() {
+			System.out.println("上一频道");
+		    }
+		}
+		```
+    + **Nhận xét:** Phần này của repo đã thể hiện một cách trực quan và thực tế về mẫu thiết kế *Facade*.
+	 
+	  Tuy nhiên, trong ví dụ minh họa có một hạn chế là không chỉ rõ Client (đối tượng sử dụng Facade để tương tác với các subsystem) nên chưa thực sự đầy đủ nếu so với code mẫu trên [GPCoder](https://gpcoder.com/4604-huong-dan-java-design-pattern-facade/).
+	
+* [**Factory Method**](https://github.com/simple-android-framework/android_design_patterns_analysis/tree/master/factory-method/AigeStudio): 
+	
+* [**Strategy**]():
+    + Repo minh họa về các hàm dùng để tính các phép toán cơ bản (+, -, *, /) với 2 số thục:
+	- Giao diện *Strategy* : định nghĩa các hành vi có thể có của một Strategy.
+		```java
+		public interface Strategy {
+			public double calc(double paramA, double paramB);
+		}
+		```
+	- Các lớp *AddStrategy, SubStrategy, MultiStrategy, DivStrategy* đóng vai trò ConcreteStrategy: cài đặt các hành vi cụ thể của Strategy.
+		```java
+		public class AddStrategy implements Strategy {
+			@Override
+			public double calc(double paramA, double paramB) {
+				System.out.println("执行加法策略...");
+				return paramA + paramB;
+			}
+		}
+
+		public class SubStrategy implements Strategy {
+			@Override
+			public double calc(double paramA, double paramB) {
+				System.out.println("执行减法策略...");
+				return paramA - paramB;
+			}
+		}
+
+		public class MultiStrategy implements Strategy {
+			@Override
+			public double calc(double paramA, double paramB) {
+				System.out.println("执行乘法策略...");
+				return paramA * paramB;
+			}
+		}
+
+		public class DivStrategy implements Strategy {
+			@Override
+			public double calc(double paramA, double paramB) {
+				System.out.println("执行除法策略...");
+				if (paramB == 0) {
+					throw new IllegalArgumentException("除数不能为0!");
+				}
+				return paramA / paramB;
+			}
+		}
+		```
+	- Lớp *Calc* đóng vai trò Context: chứa một tham chiếu đến đối tượng Strategy và nhận các yêu cầu từ Client, các yêu cầu này sau đó được ủy quyền cho Strategy thực hiện.
+		```java
+		public class Calc {
+			private Strategy strategy;
+			public void setStrategy(Strategy strategy) {
+				this.strategy = strategy;
+			}
+
+			public double calc(double paramA, double paramB) {
+				if (this.strategy == null) {
+					throw new IllegalStateException("你还没有设置计算的策略");
+				}
+				return this.strategy.calc(paramA, paramB);
+			}
+		}
+		```
+    + **Nhận xét:** Mẫu thiết kế được dùng trong repo hoàn toàn giống với mẫu chuẩn tại [GPCoder](https://gpcoder.com/4796-huong-dan-java-design-pattern-strategy/).
+	
+* [**Prototype**]():
+    + Phần code tìm được trong repo gồm lớp *WordDocument* (implements *Cloneable*) đóng vai trò ConcretePrototype: lớp này thực thi interface được cung cấp bởi Prototype để copy (nhân bản) chính bản thân nó. Các lớp này chính là thể hiện cụ thể phương thức clone().
+	
+      Ở đây, *Cloneable* là Prototype.
+	```java
+	public class WordDocument implements Cloneable {
+	    private String mText;
+	    private ArrayList<String><string> mImages = new ArrayList<String><string>();
+
+	    public WordDocument() {
+		System.out.println("----------- WordDocument构造函数 -----------");
+	    }
+
+	    @Override
+	    protected WordDocument clone() {
+		try {
+		    WordDocument doc = (WordDocument) super.clone();
+		    doc.mText = this.mText;
+		    doc.mImages = this.mImages;
+		    return doc;
+		} catch (Exception e) {
+		}
+
+		return null;
+	    }
+
+	    public String getText() {
+		return mText;
+	    }
+
+	    public void setText(String mText) {
+		this.mText = mText;
+	    }
+
+	    public List<string> getImages() {
+		return mImages;
+	    }
+
+	    public void addImage(String img) {
+		this.mImages.add(img);
+	    }
+
+	    public void showDocument() {
+		System.out.println("----------- Word Content Start -----------");
+		System.out.println("Text : " + mText);
+		System.out.println("Images List: ");
+		for (String imgName : mImages) {
+		    System.out.println("image name : " + imgName);
+		}
+		System.out.println("----------- Word Content End -----------");
+	    }
+	}
+	```
+    + Class Client được dùng để tạo mới object bằng cách gọi Prototype thực hiện clone chính nó.
+	```java
+	public class Client {
+	    public static void main(String[] args) {
+		WordDocument originDoc = new WordDocument();
+		originDoc.setText("这是一篇文档");
+		originDoc.addImage("图片1");
+		originDoc.addImage("图片2");
+		originDoc.addImage("图片3");
+		originDoc.showDocument();
+
+		WordDocument doc2 = originDoc.clone();
+		doc2.showDocument();
+
+		doc2.setText("这是修改过的Doc2文本");
+		doc2.showDocument();
+
+		originDoc.showDocument();
+	    }
+	}
+	```
+	
 ## Repo 3: Link https://github.com/braisdom/ObjectiveSql
 
 Dựa vào mẫu thiết kế Active record khuyến khích phát triển nhanh chóng và làm sạch, mã có ít nhất và quy ước về cấu hình.
