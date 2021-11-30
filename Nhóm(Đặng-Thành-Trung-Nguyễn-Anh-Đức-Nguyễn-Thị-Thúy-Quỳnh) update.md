@@ -742,6 +742,7 @@ Các mẫu được chia theo 3 nhóm mẫu thiết kế:
     + Điểm khác biệt của project này là ở chỗ tất cả các lớp và giao diện đêu là inner class (lớp trong) của Client (class AndroidMileage).
 	
 * [**Factory Method**](https://github.com/simple-android-framework/android_design_patterns_analysis/tree/master/factory-method/AigeStudio): 
+	
      **Nhận xét:** Mẫu thiết kế được dùng trong repo hoàn toàn giống với mẫu chuẩn tại [GPCoder](https://gpcoder.com/4413-huong-dan-java-design-pattern-prototype/).
 	
 * [**Strategy**]():
