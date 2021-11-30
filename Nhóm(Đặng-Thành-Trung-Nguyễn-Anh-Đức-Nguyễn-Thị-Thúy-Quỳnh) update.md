@@ -167,9 +167,204 @@ Trong repo này, tác giả đã sử dụng 1 mẫu thiết kế thuộc nhóm 
 
 ### Repo 2: Link https://github.com/simple-android-framework/android_design_patterns_analysis
 
-Đây là 1 repo tóm tắt (bằng tiếng Trung Quốc) về tất cả 23 mẫu thiết kế: 
+Đây là 1 repo tóm tắt (bằng tiếng Trung Quốc) về tất cả 23 mẫu thiết kế cơ bản. Trong đó, có 9 mẫu thiết kế có mã nguồn trong repo.
 
-Có code minh họa theo 3 mẫu thiết kế:
+Các mẫu được chia theo 3 nhóm mẫu thiết kế:
+
+#### Creational Design Patterns:
+
+	*Repo có 2 mẫu thiết kế thuộc nhóm *Creational* là *Builder* và *Prototype*.
+
+* [**Builder**](https://github.com/simple-android-framework/android_design_patterns_analysis/tree/master/builder/mr.simple):
+  Tác giả đưa ra ví dụ về mẫu thiết kế Builder trong file [readme.md](https://github.com/simple-android-framework/android_design_patterns_analysis/blob/master/builder/mr.simple/readme.md) của mục này. Ví dụ về việc dùng mẫu thiết kế Builder để tạo các đối tượng máy tính (Computer):
+	```java
+	public abstract class Computer {
+		protected int mCpuCore = 1;
+		protected int mRamSize = 0;
+		protected String mOs = "Dos";
+
+		protected Computer() {
+		}
+
+		public abstract void setCPU(int core);
+
+		public abstract void setRAM(int gb);
+
+		public abstract void setOs(String os);
+
+		@Override
+		public String toString() {
+			return "Computer [mCpuCore=" + mCpuCore + ", mRamSize=" + mRamSize
+					+ ", mOs=" + mOs + "]";
+		}
+	}
+
+	public class AppleComputer extends Computer {
+
+		protected AppleComputer() {
+		}
+
+		@Override
+		public void setCPU(int core) {
+			mCpuCore = core;
+		}
+
+		@Override
+		public void setRAM(int gb) {
+			mRamSize = gb;
+		}
+
+		@Override
+		public void setOs(String os) {
+			mOs = os;
+		}
+	}
+
+	public abstract class Builder {
+	
+		public abstract void buildCPU(int core);
+
+		public abstract void buildRAM(int gb);
+
+		public abstract void buildOs(String os);
+
+		public abstract Computer create();
+	}
+
+	public class ApplePCBuilder extends Builder {
+		private Computer mApplePc = new AppleComputer();
+
+		@Override
+		public void buildCPU(int core) {
+			mApplePc.setCPU(core);
+		}
+
+		@Override
+		public void buildRAM(int gb) {
+			mApplePc.setRAM(gb);
+		}
+
+		@Override
+		public void buildOs(String os) {
+			mApplePc.setOs(os);
+		}
+
+		@Override
+		public Computer create() {
+			return mApplePc;
+		}
+	}
+
+	public class Director {
+		Builder mBuilder = null;
+
+		public Director(Builder builder) {
+			mBuilder = builder;
+		}
+
+		public void construct(int cpu, int ram, String os) {
+			mBuilder.buildCPU(cpu);
+			mBuilder.buildRAM(ram);
+			mBuilder.buildOs(os);
+		}
+	}
+
+	public class Test {
+		public static void main(String[] args) {
+			Builder builder = new ApplePCBuilder();
+			Director pcDirector = new Director(builder);
+			pcDirector.construct(4, 2, "Mac OS X 10.9.1");
+			System.out.println("Computer Info : " + builder.create().toString());
+		}
+	}
+	```
+  + **Nhận xét:** Mẫu thiết kế này có đầy đủ các thành phần chuẩn như mẫu trên [GPCoder](https://gpcoder.com/4434-huong-dan-java-design-pattern-builder/):
+	- Builder: là lớp trừu tượng *Builder*, khai báo phương thức tạo đối tượng Computer chung.
+	- ConcreteBuilder: là lớp *ApplePCBuilder*, khai báo phương thức tạo đối tượng Computer.
+	- Product : là lớp *AppleComputer* (kế thừa lớp trừu tượng *Computer*), đại diện cho đối tượng cần tạo, đối tượng này phức tạp, có nhiều thuộc tính.
+	- Director: là lớp *Director*, là nơi gọi tới Builder để tạo ra đối tượng.
+	
+	Điểm khác biệt giữa 2 mẫu thiết kế là thành phần *Builder* của repo này là lớp trừu tượng, còn thành phần Builder ở trang GPCoder là một giao diện.
+	
+* [**Prototype**](https://github.com/simple-android-framework/android_design_patterns_analysis/tree/master/prototype/mr.simple):
+    + Phần code tìm được trong repo gồm lớp *WordDocument* (implements *Cloneable*) đóng vai trò ConcretePrototype: lớp này thực thi interface được cung cấp bởi Prototype để copy (nhân bản) chính bản thân nó. Các lớp này chính là thể hiện cụ thể phương thức clone().
+	
+      Ở đây, *Cloneable* là Prototype.
+	```java
+	public class WordDocument implements Cloneable {
+	    private String mText;
+	    private ArrayList<String><string> mImages = new ArrayList<String><string>();
+
+	    public WordDocument() {
+		System.out.println("----------- WordDocument构造函数 -----------");
+	    }
+
+	    @Override
+	    protected WordDocument clone() {
+		try {
+		    WordDocument doc = (WordDocument) super.clone();
+		    doc.mText = this.mText;
+		    doc.mImages = this.mImages;
+		    return doc;
+		} catch (Exception e) {
+		}
+
+		return null;
+	    }
+
+	    public String getText() {
+		return mText;
+	    }
+
+	    public void setText(String mText) {
+		this.mText = mText;
+	    }
+
+	    public List<string> getImages() {
+		return mImages;
+	    }
+
+	    public void addImage(String img) {
+		this.mImages.add(img);
+	    }
+
+	    public void showDocument() {
+		System.out.println("----------- Word Content Start -----------");
+		System.out.println("Text : " + mText);
+		System.out.println("Images List: ");
+		for (String imgName : mImages) {
+		    System.out.println("image name : " + imgName);
+		}
+		System.out.println("----------- Word Content End -----------");
+	    }
+	}
+	```
+    + Class Client được dùng để tạo mới object bằng cách gọi Prototype thực hiện clone chính nó.
+	```java
+	public class Client {
+	    public static void main(String[] args) {
+		WordDocument originDoc = new WordDocument();
+		originDoc.setText("这是一篇文档");
+		originDoc.addImage("图片1");
+		originDoc.addImage("图片2");
+		originDoc.addImage("图片3");
+		originDoc.showDocument();
+
+		WordDocument doc2 = originDoc.clone();
+		doc2.showDocument();
+
+		doc2.setText("这是修改过的Doc2文本");
+		doc2.showDocument();
+
+		originDoc.showDocument();
+	    }
+	}
+	```
+    + **Nhận xét:** Mẫu thiết kế được dùng trong repo hoàn toàn giống với mẫu chuẩn tại [GPCoder](https://gpcoder.com/4413-huong-dan-java-design-pattern-prototype/).
+
+#### Nhóm Structural Design Patterns:
+
+	*Repo có 3 mẫu thiết kế thuộc nhóm *Structural* là *Bridge*, *Composite* và *Facade*.
 
 * [**Bridge**](https://github.com/simple-android-framework/android_design_patterns_analysis/tree/master/bridge/shen0834):
 
@@ -264,7 +459,85 @@ Có code minh họa theo 3 mẫu thiết kế:
 	}
 	```
    + **Nhận xét:**  Khi đối chiếu đoạn code trên với mẫu thiết kế chuẩn trên [GPCoder](https://gpcoder.com/4520-huong-dan-java-design-pattern-bridge/), em thấy 2 mẫu hoàn toàn trùng khớp, không có thay đổi gì. Cụ thể hơn, trong tình huống này, dễ dàng nhận thấy lớp *Shape* đóng vai trò *Abstraction*, các lớp *Circle* và *Rantangle* là các *Refined Abstraction*, giao diện *Drawing* đóng vai trò *Implementor* với 2 *ConcreteImplementor* là V1Drawing và V2Drawing.
+	
+* [**Composite**](https://github.com/simple-android-framework/android_design_patterns_analysis/tree/master/composite/tiny-times):
+	
+	Tác giả đưa ra ví dụ về mẫu thiết kế Builder trong file [readme.md](https://github.com/simple-android-framework/android_design_patterns_analysis/blob/master/composite/tiny-times/readme.md) của mục này. Mẫu thiết kế được đưa ra ở đây giống hệt mẫu chuẩn trên [GPCoder](https://gpcoder.com/4554-huong-dan-java-design-pattern-composite/).
+	
+* [**Facade**](https://github.com/simple-android-framework/android_design_patterns_analysis/tree/master/facade/elsdnwn):
+    + Tác giả đưa ra ví dụ minh họa về mẫu thiết kế được dùng trong quản lý một chiếc ti vi, với các lớp và giao diện:
+	- Lớp TvController đóng vai trò Facade: biết rõ lớp của hệ thống con nào đảm nhận việc đáp ứng yêu cầu của client, sẽ chuyển yêu cầu của client đến các đối tượng của hệ thống con tương ứng: 
+		```java
+		public class TvController {
+		    private PowerSystem mPowerSystem = new PowerSystem();
+		    private VoiceSystem mVoiceSystem = new VoiceSystem();
+		    private ChannelSystem mChannelSystem = new ChannelSystem();
 
+		    public void powerOn() {
+			mPowerSystem.powerOn();
+		    }
+
+		    public void powerOff() {
+			mPowerSystem.powerOff();
+		    }
+
+		    public void turnUp() {
+			mVoiceSystem.turnUp();
+		    }
+
+		    public void turnDown() {
+			mVoiceSystem.turnDown();
+		    }
+
+		    public void nextChannel() {
+			mChannelSystem.next();
+		    }
+
+		    public void prevChannel() {
+			mChannelSystem.prev();
+		    }
+		}
+		```
+	- Lớp PowerSystem, VoiceSystem, ChannelSystem đóng vai trò Subsystems: cài đặt các chức năng của hệ thống con, xử lý công việc được gọi bởi Facade. Các lớp này không cần biết Facade và không tham chiếu đến nó.
+		```java
+		 class PowerSystem {
+		    public void powerOn() {
+			System.out.println("开机");
+		    }
+
+		    public void powerOff() {
+			System.out.println("关机");
+		    }
+		}
+		
+		class VoiceSystem {
+		    public void turnUp() {
+			System.out.println("音量增大");
+		    }
+
+		    public void turnDown() {
+			System.out.println("音量减小");
+		    }
+		}
+		
+		class ChannelSystem {
+		    public void next() {
+			System.out.println("下一频道");
+		    }
+
+		    public void prev() {
+			System.out.println("上一频道");
+		    }
+		}
+		```
+    + **Nhận xét:** Phần này của repo đã thể hiện một cách trực quan và thực tế về mẫu thiết kế *Facade*.
+	 
+	  Tuy nhiên, trong ví dụ minh họa có một hạn chế là không chỉ rõ Client (đối tượng sử dụng Facade để tương tác với các subsystem) nên chưa thực sự đầy đủ nếu so với code mẫu trên [GPCoder](https://gpcoder.com/4604-huong-dan-java-design-pattern-facade/).
+	
+#### Nhóm Behaviorial Design Patterns:
+
+	*Repo có 4 mẫu thiết kế thuộc nhóm *Behaviorial* là *Command*, *Iterator*, *Factory Method* và **.
+	
 * [**Command**](https://github.com/simple-android-framework/android_design_patterns_analysis/tree/master/command/lijunhuayc/resource/command):
     Trong package [*command*](https://github.com/simple-android-framework/android_design_patterns_analysis/tree/master/command/lijunhuayc/resource/command), có các lớp và giao diện dùng để làm việc với các đối tượng [PeopleBean](https://github.com/simple-android-framework/android_design_patterns_analysis/blob/master/command/lijunhuayc/resource/command/PeopleBean.java) (chứa các thông tin của một người), gồm:
 	+ Giao diện [Command](https://github.com/simple-android-framework/android_design_patterns_analysis/blob/master/command/lijunhuayc/resource/command/Command.java):
@@ -468,192 +741,8 @@ Có code minh họa theo 3 mẫu thiết kế:
 	- Client (class AndroidMileage) đối tượng sử dụng Iterator Pattern, nó yêu cầu một iterator từ một đối tượng collection để duyệt qua các phần tử mà nó giữ. Các phương thức của iterator được sử dụng để truy xuất các phần tử từ collection theo một trình tự thích hợp.
     + Điểm khác biệt của project này là ở chỗ tất cả các lớp và giao diện đêu là inner class (lớp trong) của Client (class AndroidMileage).
 	
-* [**Builder**](https://github.com/simple-android-framework/android_design_patterns_analysis/tree/master/builder/mr.simple):
-  Tác giả đưa ra ví dụ về mẫu thiết kế Builder trong file [readme.md](https://github.com/simple-android-framework/android_design_patterns_analysis/blob/master/builder/mr.simple/readme.md) của mục này. Ví dụ về việc dùng mẫu thiết kế Builder để tạo các đối tượng máy tính (Computer):
-	```java
-	public abstract class Computer {
-		protected int mCpuCore = 1;
-		protected int mRamSize = 0;
-		protected String mOs = "Dos";
-
-		protected Computer() {
-		}
-
-		public abstract void setCPU(int core);
-
-		public abstract void setRAM(int gb);
-
-		public abstract void setOs(String os);
-
-		@Override
-		public String toString() {
-			return "Computer [mCpuCore=" + mCpuCore + ", mRamSize=" + mRamSize
-					+ ", mOs=" + mOs + "]";
-		}
-	}
-
-	public class AppleComputer extends Computer {
-
-		protected AppleComputer() {
-		}
-
-		@Override
-		public void setCPU(int core) {
-			mCpuCore = core;
-		}
-
-		@Override
-		public void setRAM(int gb) {
-			mRamSize = gb;
-		}
-
-		@Override
-		public void setOs(String os) {
-			mOs = os;
-		}
-	}
-
-	public abstract class Builder {
-	
-		public abstract void buildCPU(int core);
-
-		public abstract void buildRAM(int gb);
-
-		public abstract void buildOs(String os);
-
-		public abstract Computer create();
-	}
-
-	public class ApplePCBuilder extends Builder {
-		private Computer mApplePc = new AppleComputer();
-
-		@Override
-		public void buildCPU(int core) {
-			mApplePc.setCPU(core);
-		}
-
-		@Override
-		public void buildRAM(int gb) {
-			mApplePc.setRAM(gb);
-		}
-
-		@Override
-		public void buildOs(String os) {
-			mApplePc.setOs(os);
-		}
-
-		@Override
-		public Computer create() {
-			return mApplePc;
-		}
-	}
-
-	public class Director {
-		Builder mBuilder = null;
-
-		public Director(Builder builder) {
-			mBuilder = builder;
-		}
-
-		public void construct(int cpu, int ram, String os) {
-			mBuilder.buildCPU(cpu);
-			mBuilder.buildRAM(ram);
-			mBuilder.buildOs(os);
-		}
-	}
-
-	public class Test {
-		public static void main(String[] args) {
-			Builder builder = new ApplePCBuilder();
-			Director pcDirector = new Director(builder);
-			pcDirector.construct(4, 2, "Mac OS X 10.9.1");
-			System.out.println("Computer Info : " + builder.create().toString());
-		}
-	}
-	```
-  + **Nhận xét:** Mẫu thiết kế này có đầy đủ các thành phần chuẩn như mẫu trên [GPCoder](https://gpcoder.com/4434-huong-dan-java-design-pattern-builder/):
-	- Builder: là lớp trừu tượng *Builder*, khai báo phương thức tạo đối tượng Computer chung.
-	- ConcreteBuilder: là lớp *ApplePCBuilder*, khai báo phương thức tạo đối tượng Computer.
-	- Product : là lớp *AppleComputer* (kế thừa lớp trừu tượng *Computer*), đại diện cho đối tượng cần tạo, đối tượng này phức tạp, có nhiều thuộc tính.
-	- Director: là lớp *Director*, là nơi gọi tới Builder để tạo ra đối tượng.
-	
-	Điểm khác biệt giữa 2 mẫu thiết kế là thành phần *Builder* của repo này là lớp trừu tượng, còn thành phần Builder ở trang GPCoder là một giao diện.
-	
-* [**Composite**](https://github.com/simple-android-framework/android_design_patterns_analysis/tree/master/composite/tiny-times):
-	
-	Tác giả đưa ra ví dụ về mẫu thiết kế Builder trong file [readme.md](https://github.com/simple-android-framework/android_design_patterns_analysis/blob/master/composite/tiny-times/readme.md) của mục này. Mẫu thiết kế được đưa ra ở đây giống hệt mẫu chuẩn trên [GPCoder](https://gpcoder.com/4554-huong-dan-java-design-pattern-composite/).
-	
-* [**Facade**](https://github.com/simple-android-framework/android_design_patterns_analysis/tree/master/facade/elsdnwn):
-    + Tác giả đưa ra ví dụ minh họa về mẫu thiết kế được dùng trong quản lý một chiếc ti vi, với các lớp và giao diện:
-	- Lớp TvController đóng vai trò Facade: biết rõ lớp của hệ thống con nào đảm nhận việc đáp ứng yêu cầu của client, sẽ chuyển yêu cầu của client đến các đối tượng của hệ thống con tương ứng: 
-		```java
-		public class TvController {
-		    private PowerSystem mPowerSystem = new PowerSystem();
-		    private VoiceSystem mVoiceSystem = new VoiceSystem();
-		    private ChannelSystem mChannelSystem = new ChannelSystem();
-
-		    public void powerOn() {
-			mPowerSystem.powerOn();
-		    }
-
-		    public void powerOff() {
-			mPowerSystem.powerOff();
-		    }
-
-		    public void turnUp() {
-			mVoiceSystem.turnUp();
-		    }
-
-		    public void turnDown() {
-			mVoiceSystem.turnDown();
-		    }
-
-		    public void nextChannel() {
-			mChannelSystem.next();
-		    }
-
-		    public void prevChannel() {
-			mChannelSystem.prev();
-		    }
-		}
-		```
-	- Lớp PowerSystem, VoiceSystem, ChannelSystem đóng vai trò Subsystems: cài đặt các chức năng của hệ thống con, xử lý công việc được gọi bởi Facade. Các lớp này không cần biết Facade và không tham chiếu đến nó.
-		```java
-		 class PowerSystem {
-		    public void powerOn() {
-			System.out.println("开机");
-		    }
-
-		    public void powerOff() {
-			System.out.println("关机");
-		    }
-		}
-		
-		class VoiceSystem {
-		    public void turnUp() {
-			System.out.println("音量增大");
-		    }
-
-		    public void turnDown() {
-			System.out.println("音量减小");
-		    }
-		}
-		
-		class ChannelSystem {
-		    public void next() {
-			System.out.println("下一频道");
-		    }
-
-		    public void prev() {
-			System.out.println("上一频道");
-		    }
-		}
-		```
-    + **Nhận xét:** Phần này của repo đã thể hiện một cách trực quan và thực tế về mẫu thiết kế *Facade*.
-	 
-	  Tuy nhiên, trong ví dụ minh họa có một hạn chế là không chỉ rõ Client (đối tượng sử dụng Facade để tương tác với các subsystem) nên chưa thực sự đầy đủ nếu so với code mẫu trên [GPCoder](https://gpcoder.com/4604-huong-dan-java-design-pattern-facade/).
-	
 * [**Factory Method**](https://github.com/simple-android-framework/android_design_patterns_analysis/tree/master/factory-method/AigeStudio): 
+     **Nhận xét:** Mẫu thiết kế được dùng trong repo hoàn toàn giống với mẫu chuẩn tại [GPCoder](https://gpcoder.com/4413-huong-dan-java-design-pattern-prototype/).
 	
 * [**Strategy**]():
     + Repo minh họa về các hàm dùng để tính các phép toán cơ bản (+, -, *, /) với 2 số thục:
@@ -718,80 +807,6 @@ Có code minh họa theo 3 mẫu thiết kế:
 		```
     + **Nhận xét:** Mẫu thiết kế được dùng trong repo hoàn toàn giống với mẫu chuẩn tại [GPCoder](https://gpcoder.com/4796-huong-dan-java-design-pattern-strategy/).
 	
-* [**Prototype**]():
-    + Phần code tìm được trong repo gồm lớp *WordDocument* (implements *Cloneable*) đóng vai trò ConcretePrototype: lớp này thực thi interface được cung cấp bởi Prototype để copy (nhân bản) chính bản thân nó. Các lớp này chính là thể hiện cụ thể phương thức clone().
-	
-      Ở đây, *Cloneable* là Prototype.
-	```java
-	public class WordDocument implements Cloneable {
-	    private String mText;
-	    private ArrayList<String><string> mImages = new ArrayList<String><string>();
-
-	    public WordDocument() {
-		System.out.println("----------- WordDocument构造函数 -----------");
-	    }
-
-	    @Override
-	    protected WordDocument clone() {
-		try {
-		    WordDocument doc = (WordDocument) super.clone();
-		    doc.mText = this.mText;
-		    doc.mImages = this.mImages;
-		    return doc;
-		} catch (Exception e) {
-		}
-
-		return null;
-	    }
-
-	    public String getText() {
-		return mText;
-	    }
-
-	    public void setText(String mText) {
-		this.mText = mText;
-	    }
-
-	    public List<string> getImages() {
-		return mImages;
-	    }
-
-	    public void addImage(String img) {
-		this.mImages.add(img);
-	    }
-
-	    public void showDocument() {
-		System.out.println("----------- Word Content Start -----------");
-		System.out.println("Text : " + mText);
-		System.out.println("Images List: ");
-		for (String imgName : mImages) {
-		    System.out.println("image name : " + imgName);
-		}
-		System.out.println("----------- Word Content End -----------");
-	    }
-	}
-	```
-    + Class Client được dùng để tạo mới object bằng cách gọi Prototype thực hiện clone chính nó.
-	```java
-	public class Client {
-	    public static void main(String[] args) {
-		WordDocument originDoc = new WordDocument();
-		originDoc.setText("这是一篇文档");
-		originDoc.addImage("图片1");
-		originDoc.addImage("图片2");
-		originDoc.addImage("图片3");
-		originDoc.showDocument();
-
-		WordDocument doc2 = originDoc.clone();
-		doc2.showDocument();
-
-		doc2.setText("这是修改过的Doc2文本");
-		doc2.showDocument();
-
-		originDoc.showDocument();
-	    }
-	}
-	```
 	
 ## Repo 3: Link https://github.com/braisdom/ObjectiveSql
 
