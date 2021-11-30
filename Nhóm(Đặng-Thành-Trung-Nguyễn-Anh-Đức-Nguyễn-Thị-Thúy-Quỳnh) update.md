@@ -173,7 +173,7 @@ Các mẫu được chia theo 3 nhóm mẫu thiết kế:
 
 #### Creational Design Patterns:
 
-	*Repo có 2 mẫu thiết kế thuộc nhóm *Creational* là *Builder* và *Prototype*.
+*Repo có 2 mẫu thiết kế thuộc nhóm *Creational* là *Builder* và *Prototype*.*
 
 * [**Builder**](https://github.com/simple-android-framework/android_design_patterns_analysis/tree/master/builder/mr.simple):
   Tác giả đưa ra ví dụ về mẫu thiết kế Builder trong file [readme.md](https://github.com/simple-android-framework/android_design_patterns_analysis/blob/master/builder/mr.simple/readme.md) của mục này. Ví dụ về việc dùng mẫu thiết kế Builder để tạo các đối tượng máy tính (Computer):
@@ -364,7 +364,7 @@ Các mẫu được chia theo 3 nhóm mẫu thiết kế:
 
 #### Nhóm Structural Design Patterns:
 
-	*Repo có 3 mẫu thiết kế thuộc nhóm *Structural* là *Bridge*, *Composite* và *Facade*.
+*Repo có 3 mẫu thiết kế thuộc nhóm *Structural* là *Bridge*, *Composite* và *Facade*.*
 
 * [**Bridge**](https://github.com/simple-android-framework/android_design_patterns_analysis/tree/master/bridge/shen0834):
 
@@ -536,7 +536,7 @@ Các mẫu được chia theo 3 nhóm mẫu thiết kế:
 	
 #### Nhóm Behaviorial Design Patterns:
 
-	*Repo có 4 mẫu thiết kế thuộc nhóm *Behaviorial* là *Command*, *Iterator*, *Factory Method* và **.
+*Repo có 4 mẫu thiết kế thuộc nhóm *Behaviorial* là *Command*, *Iterator*, *Factory Method* và *Strategy*.*
 	
 * [**Command**](https://github.com/simple-android-framework/android_design_patterns_analysis/tree/master/command/lijunhuayc/resource/command):
     Trong package [*command*](https://github.com/simple-android-framework/android_design_patterns_analysis/tree/master/command/lijunhuayc/resource/command), có các lớp và giao diện dùng để làm việc với các đối tượng [PeopleBean](https://github.com/simple-android-framework/android_design_patterns_analysis/blob/master/command/lijunhuayc/resource/command/PeopleBean.java) (chứa các thông tin của một người), gồm:
