@@ -753,7 +753,7 @@ Các mẫu được chia theo 3 nhóm mẫu thiết kế:
 	- Client (class AndroidMileage) đối tượng sử dụng Iterator Pattern, nó yêu cầu một iterator từ một đối tượng collection để duyệt qua các phần tử mà nó giữ. Các phương thức của iterator được sử dụng để truy xuất các phần tử từ collection theo một trình tự thích hợp.
     + Điểm khác biệt của project này là ở chỗ tất cả các lớp và giao diện đêu là inner class (lớp trong) của Client (class AndroidMileage).
 	
-* [**Strategy**]():
+* [**Strategy**](https://github.com/simple-android-framework/android_design_patterns_analysis/tree/master/strategy/gkerison):
     + Repo minh họa về các hàm dùng để tính các phép toán cơ bản (+, -, *, /) với 2 số thục:
 	- Giao diện *Strategy* : định nghĩa các hành vi có thể có của một Strategy.
 		```java
@@ -1016,9 +1016,182 @@ public class Hibernate implements ORMFramework {
 
 ### Các mẫu thiết kế thuộc nhóm Creational
 
-### Các mẫu thiết kế thuộc nhóm Structural
+* Mẫu thiết kế *Factory Method* trong package [formations](https://github.com/Anuken/Mindustry/tree/master/core/src/mindustry/ai/formations) với các lớp và giao diện sau:
+
+    + Creator [FormationPattern](https://github.com/Anuken/Mindustry/blob/master/core/src/mindustry/ai/formations/FormationPattern.java) là một lớp trừu tượng, là lớp cha của các Concrete Creator phía dưới.
+	```java
+	public abstract class FormationPattern{
+	    public int slots;
+	    /** Spacing between members. */
+	    public float spacing = 20f;
+
+	    /** Returns the location of the given slot index. */
+	    public abstract Vec3 calculateSlotLocation(Vec3 out, int slot);
+
+	    /**
+	     * Returns true if the pattern can support the given number of slots
+	     * @param slotCount the number of slots
+	     * @return {@code true} if this pattern can support the given number of slots; {@code false} othervwise.
+	     */
+	    public boolean supportsSlots(int slotCount){
+		return true;
+	    }
+	}
+	```
+
+    + Các Concrete Creator: [CircleFormation](https://github.com/Anuken/Mindustry/tree/master/core/src/mindustry/ai/formations/patterns/CircleFormation), [SquareFormation](https://github.com/Anuken/Mindustry/blob/master/core/src/mindustry/ai/formations/patterns/SquareFormation.java) implement các phương thức của Creator *FormationPattern* theo nghiệp vụ riêng của nó là các creator dành riêng cho các mẫu hình tròn và hình vuông.
+	```java
+	public class CircleFormation extends FormationPattern {
+	    @Override
+	    public Vec3 calculateSlotLocation(Vec3 outLocation, int slotNumber) {
+		if(slots > 1){
+		    float angle = (360f * slotNumber) / slots + (slots == 8 ? 22.5f : 0);
+		    float radius = spacing / (float)Math.sin(180f / slots * Mathf.degRad);
+		    outLocation.set(Angles.trnsx(angle, radius), Angles.trnsy(angle, radius), angle);
+		}else{
+		    outLocation.set(0, spacing * 1.1f, 360f * slotNumber);
+		}
+		return outLocation;
+	    }
+	}
+
+	public class SquareFormation extends FormationPattern {
+	    @Override
+	    public Vec3 calculateSlotLocation(Vec3 out, int slot) {
+		int side = Mathf.ceil(Mathf.sqrt(slots + 1));
+		int cx = slot % side, cy = slot / side;
+		if(cx == side /2 && cy == side/2 && (side%2)==1){
+		    slot = slots;
+		    cx = slot % side;
+		    cy = slot / side;
+		}
+		return out.set(cx - (side/2f - 0.5f), cy - (side/2f - 0.5f), 0).scl(spacing);
+	    }
+	}
+	```
+
+    + **Nhận xét:** Mẫu thiết kế được dùng trong repo giống với mẫu chuẩn tại [Refactoring Guru](https://refactoring.guru/design-patterns/factory-method) và [GPCoder](https://gpcoder.com/4413-huong-dan-java-design-pattern-prototype/).
+
+* Mẫu thiết kế **Abstract Factory** trong package [units](https://github.com/Anuken/Mindustry/tree/master/core/src/mindustry/entities/units):
+
+    + Giao diện [UnitController](https://github.com/Anuken/Mindustry/core/src/mindustry/entities/units/UnitController.java) đóng vai trò Abstract Factory, có nhiệm vụ khai báo dạng interface hoặc abstract class chứa các phương thức để tạo ra các đối tượng abstract.
+	```java
+	public interface UnitController{
+	    void unit(Unit unit);
+	    Unit unit();
+
+	    default boolean isValidController(){
+		return true;
+	    }
+
+	    default void command(UnitCommand command){
+	    }
+
+	    default void updateUnit(){
+	    }
+
+	    default void removed(Unit unit){
+	    }
+
+	    default boolean isBeingControlled(Unit player){
+		return false;
+	    }
+	}
+	```
+    + Lớp [AIController](https://github.com/Anuken/Mindustry/core/src/mindustry/entities/units/AIController.java) cùng các lớp kế thừa nó trong package [../ai/types](https://github.com/Anuken/Mindustry/tree/master/core/src/mindustry/ai/types) (gồm *BuilderAI, DefenderAI, FlyingAI, FormationAI, GroundAI, HugAI, LogicAI, MinerAI, RepairAI*) đóng vai trò ConcreteFactory, có nhiệm vụ xây dựng, cài đặt các phương thức tạo các đối tượng cụ thể dùng AI.
+	```java
+	public class AIController implements UnitController{
+	    protected static final Vec2 vec = new Vec2();
+	    protected static final int timerTarget = 0, timerTarget2 = 1, timerTarget3 = 2, timerTarget4 = 3;
+
+	    protected Unit unit;
+	    protected Interval timer = new Interval(4);
+	    protected AIController fallback;
+
+	    /** main target that is being faced */
+	    protected Teamc target;
+
+	    {
+		timer.reset(0, Mathf.random(40f));
+		timer.reset(1, Mathf.random(60f));
+	    }
+
+	    @Override
+	    ... //some code (chi tiết tại link trên)
+	}
+	```
+    + **Nhận xét:** Mẫu thiết kế được dùng có đủ các thành phần của [mẫu AbstractFactory chuẩn](https://refactoring.guru/design-patterns/abstract-factory).
+
+	Bên cạnh đó, ở đây tác giả đã có sự sáng tạo khi không cho các ConcreteFactory implement trực tiếp từ Abstract Factory (giao diện UnitController) mà xây dựng lớp một lớp cha *AIController* để có thể sử dụng code của lớp cha này cho các lớp con, điều này giúp cho chương trình trở nên gọn nhẹ hơn.
+
 
 ### Các mẫu thiết kế thuộc nhóm Behaviorial
+
+* Mẫu thiết kế **Strategy** trong package [ctype](https://github.com/Anuken/Mindustry/blob/master/core/src/mindustry/ctype):
+
+    + Trong mẫu này, giao diện [ContentList](https://github.com/Anuken/Mindustry/blob/master/core/src/mindustry/ctype/ContentList.java) đóng vai trò Strategy với nhiệm vụ định nghĩa các hành vi có thể có của một Strategy, đó là load các đối tượng. Các đối tượng thuộc kiểu *ContentList* được dùng trong nhiều Context (ngữ cảnh) khác nhau trong khắp project.
+	```java
+	public interface ContentList{
+	    /** This method should create all the content. */
+	    void load();
+	}
+	```
+    + Các lớp *Blocks, Bullets, Items, Liquids, Loadouts, Planets, SectorPresets, StatusEffects, TechTree, UnitTypes, Weathers* trong package [content](https://github.com/Anuken/Mindustry/tree/master/core/src/mindustry/content) là các ConcreteStrategy, có vai trò cài đặt các hành vi cụ thể (load) của Strategy.
+Dưới đây là định nghĩa các lớp này:
+
+	```java
+	public class Blocks implements ContentList{
+	    public static Block...
+	}
+	public class Bullets implements ContentList{
+	    public static BulletType...
+	}
+	public class Items implements ContentList{
+	    public static Item
+	    scrap, copper, lead, graphite, coal, titanium, thorium, silicon, plastanium,
+	    phaseFabric, surgeAlloy, sporePod, sand, blastCompound, pyratite, metaglass;
+	}
+	public class Loadouts implements ContentList{
+	    public static Schematic
+	    basicShard,
+	    basicFoundation,
+	    basicNucleus;
+
+	    @Override
+	    public void load(){
+		basicShard = Schematics.readBase64...
+	    }
+	}
+	public class TechTree implements ContentList{
+	    static ObjectMap<UnlockableContent, TechNode> map = new ObjectMap<>();
+	    static TechNode context = null;
+
+	    public static Seq<TechNode> all;
+	    public static TechNode root;
+	    //code
+	}
+	public class Weathers implements ContentList{
+	    public static Weather
+	    rain,
+	    snow,
+	    sandstorm,
+	    sporestorm,
+	    fog,
+	    suspendParticles;
+
+	    @Override
+	    public void load(){
+		snow = ...
+		rain = ...
+		sandstorm = ...
+		sporestorm = ...
+		fog = ...
+		suspendParticles = ...
+	    }
+	}
+	```
+    + **Nhận xét:** Khi đối chiếu với mẫu thiết kế chuẩn tại [GPCoder](https://gpcoder.com/4796-huong-dan-java-design-pattern-strategy/), có thể thấy mẫu thiết kế dùng trong repo này có đầy đủ các thành phần chuẩn và có phạm vi áp  rộng hơn mẫu chuẩn.
+
 
 * Mẫu thiết kế *Strategy* trong package [formations](https://github.com/Anuken/Mindustry/tree/master/core/src/mindustry/ai/formations) với các lớp và giao diện sau:
 
@@ -1095,176 +1268,9 @@ public class Hibernate implements ORMFramework {
 
     + **Nhận xét:** Khi đối chiếu với mẫu thiết kế chuẩn tại [GPCoder](https://gpcoder.com/4796-huong-dan-java-design-pattern-strategy/), có thể thấy mẫu thiết kế dùng trong repo này có đầy đủ các thành phần chuẩn. Bên cạnh đó, mẫu thiết kế trong Mindustry đã được biến tấu đi một chút khi trong các ConcreteStategy, có lớp trừu tượng *BoundedSlotAssignmentStrategy* và có lớp *SoftRoleSlotAssignmentStrategy* kế thừa lớp trừu tượng này.
 
-* Mẫu thiết kế *Factory Method* trong package [formations](https://github.com/Anuken/Mindustry/tree/master/core/src/mindustry/ai/formations) với các lớp và giao diện sau:
 
-    + Creator [FormationPattern](https://github.com/Anuken/Mindustry/blob/master/core/src/mindustry/ai/formations/FormationPattern.java) là một lớp trừu tượng, là lớp cha của các Concrete Creator phía dưới.
-	```java
-	public abstract class FormationPattern{
-	    public int slots;
-	    /** Spacing between members. */
-	    public float spacing = 20f;
+## Kết luận
 
-	    /** Returns the location of the given slot index. */
-	    public abstract Vec3 calculateSlotLocation(Vec3 out, int slot);
+Trên đây là toàn bộ phần trình bày của nhóm em. Tổng cộng trong 4 repo, nhóm em tìm được 12/23 mẫu thiết kế thuộc cả 3 nhóm, trong đó có một vài mẫu thiết kế quan trọng được tìm thấy nhiều lần như Adapter, Strategy, Factory Method. Qua toàn bộ quá trình tìm hiểu, nhóm chúng em nhận thấy 23 mẫu thiết kế cơ bản không chỉ là những gì trên sách vở mà còn rất quan trọng đối với các nhà phát triển phần mềm. Do kiến thức phần này rất rộng và chúng em cũng chưa có nhiều kinh nghiệm nên trong bài báo cáo không thể tránh khỏi sai sót, mong thầy cùng các bạn góp ý để nhóm có thể hoàn thiện bài tốt hơn.
 
-	    /**
-	     * Returns true if the pattern can support the given number of slots
-	     * @param slotCount the number of slots
-	     * @return {@code true} if this pattern can support the given number of slots; {@code false} othervwise.
-	     */
-	    public boolean supportsSlots(int slotCount){
-		return true;
-	    }
-	}
-	```
-
-    + Các Concrete Creator: [CircleFormation](https://github.com/Anuken/Mindustry/tree/master/core/src/mindustry/ai/formations/patterns/CircleFormation), [SquareFormation](https://github.com/Anuken/Mindustry/blob/master/core/src/mindustry/ai/formations/patterns/SquareFormation.java) implement các phương thức của Creator *FormationPattern* theo nghiệp vụ riêng của nó là các creator dành riêng cho các mẫu hình tròn và hình vuông.
-	```java
-	public class CircleFormation extends FormationPattern {
-	    @Override
-	    public Vec3 calculateSlotLocation(Vec3 outLocation, int slotNumber) {
-		if(slots > 1){
-		    float angle = (360f * slotNumber) / slots + (slots == 8 ? 22.5f : 0);
-		    float radius = spacing / (float)Math.sin(180f / slots * Mathf.degRad);
-		    outLocation.set(Angles.trnsx(angle, radius), Angles.trnsy(angle, radius), angle);
-		}else{
-		    outLocation.set(0, spacing * 1.1f, 360f * slotNumber);
-		}
-		return outLocation;
-	    }
-	}
-
-	public class SquareFormation extends FormationPattern {
-	    @Override
-	    public Vec3 calculateSlotLocation(Vec3 out, int slot) {
-		int side = Mathf.ceil(Mathf.sqrt(slots + 1));
-		int cx = slot % side, cy = slot / side;
-		if(cx == side /2 && cy == side/2 && (side%2)==1){
-		    slot = slots;
-		    cx = slot % side;
-		    cy = slot / side;
-		}
-		return out.set(cx - (side/2f - 0.5f), cy - (side/2f - 0.5f), 0).scl(spacing);
-	    }
-	}
-	```
-
-    + **Nhận xét:** Mẫu thiết kế được dùng trong repo giống với mẫu chuẩn tại [Refactoring Guru](https://refactoring.guru/design-patterns/factory-method), và [GPCoder](https://gpcoder.com/4413-huong-dan-java-design-pattern-prototype/).
-
-* Mẫu thiết kế **Abstract Factory** trong package [units](https://github.com/Anuken/Mindustry/tree/master/core/src/mindustry/entities/units):
-
-    + Giao diện [UnitController](https://github.com/Anuken/Mindustry/core/src/mindustry/entities/units/UnitController.java) đóng vai trò Abstract Factory, có nhiệm vụ khai báo dạng interface hoặc abstract class chứa các phương thức để tạo ra các đối tượng abstract.
-	```java
-	public interface UnitController{
-	    void unit(Unit unit);
-	    Unit unit();
-
-	    default boolean isValidController(){
-		return true;
-	    }
-
-	    default void command(UnitCommand command){
-	    }
-
-	    default void updateUnit(){
-	    }
-
-	    default void removed(Unit unit){
-	    }
-
-	    default boolean isBeingControlled(Unit player){
-		return false;
-	    }
-	}
-	```
-    + Lớp [AIController](https://github.com/Anuken/Mindustry/core/src/mindustry/entities/units/AIController.java) đóng vai trò ConcreteFactory, có nhiệm vụxxây dựng, cài đặt các phương thức tạo các đối tượng cụ thể dùng AIAI.
-	```java
-	public class AIController implements UnitController{
-	    protected static final Vec2 vec = new Vec2();
-	    protected static final int timerTarget = 0, timerTarget2 = 1, timerTarget3 = 2, timerTarget4 = 3;
-
-	    protected Unit unit;
-	    protected Interval timer = new Interval(4);
-	    protected AIController fallback;
-
-	    /** main target that is being faced */
-	    protected Teamc target;
-
-	    {
-		timer.reset(0, Mathf.random(40f));
-		timer.reset(1, Mathf.random(60f));
-	    }
-
-	    @Override
-	    ... //some code (chi tiết tại link trên)
-	}
-	```
-
-	AIController->BuilderAI, DefenderAI, FlyingAI, FormationAI, GroundAI, HugAI, LogicAI, MinerAI, RepairAI
-	[Link...]
-	Facade:
-
-	facade: ContentList
-	Mindustry/core/src/mindustry/ctype/ContentList.jav
-
-	```java
-	public interface ContentList{
-	    /** This method should create all the content. */
-	    void load();
-	}
-	```
-	subsystems: Blocks, Bullets, Items, Liquids, Loadouts, PLanets, SectorPresets, StatusEffects, TechTree, UnitTypes, Weathers
-	Mindustry/core/src/mindustry/content
-
-	```java
-	public class Blocks implements ContentList{
-	    public static Block...
-	}
-	public class Bullets implements ContentList{
-	    public static BulletType...
-	}
-	public class Items implements ContentList{
-	    public static Item
-	    scrap, copper, lead, graphite, coal, titanium, thorium, silicon, plastanium,
-	    phaseFabric, surgeAlloy, sporePod, sand, blastCompound, pyratite, metaglass;
-	}
-	public class Loadouts implements ContentList{
-	    public static Schematic
-	    basicShard,
-	    basicFoundation,
-	    basicNucleus;
-
-	    @Override
-	    public void load(){
-		basicShard = Schematics.readBase64...
-	    }
-	}
-	public class TechTree implements ContentList{
-	    static ObjectMap<UnlockableContent, TechNode> map = new ObjectMap<>();
-	    static TechNode context = null;
-
-	    public static Seq<TechNode> all;
-	    public static TechNode root;
-	    //code
-	}
-	public class Weathers implements ContentList{
-	    public static Weather
-	    rain,
-	    snow,
-	    sandstorm,
-	    sporestorm,
-	    fog,
-	    suspendParticles;
-
-	    @Override
-	    public void load(){
-		snow = ...
-		rain = ...
-		sandstorm = ...
-		sporestorm = ...
-		fog = ...
-		suspendParticles = ...
-	    }
-	}
-	```   
-	-> dễ dàng quản lý, điều hướng
+***Chúng em xin chân thành cảm ơn thầy và các bạn đã đọc bài báo cáo này.***
