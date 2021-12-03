@@ -11,7 +11,7 @@
 Trong quá trình tìm kiếm, phân tích, nhóm em đã tìm được một số repo mã nguồn trên github có 23 mẫu thiết kế như sau.
 
 ## Tóm tắt:
-*Nhóm em đã tìm và phân tích 4 repo:*
+*Nhóm em đã tìm và phân tích 4 repo dưới đây:*
 
 	 1. https://github.com/shuleisanshi/myblog
 	 
@@ -21,7 +21,7 @@ Trong quá trình tìm kiếm, phân tích, nhóm em đã tìm được một s�
 	 
 	 4. https://github.com/Anuken/Mindustry
 	 
-	 *Trong đó, repo 2 là code minh họa 23 design patterns, các repo còn lại là các dự án thực tế.*
+*Trong đó, repo 2 là code minh họa 23 design patterns, các repo còn lại là các dự án thực tế.*
 
 ## Repo 1: Link https://github.com/shuleisanshi/myblog
 
@@ -50,6 +50,7 @@ Trong repo này, tác giả đã sử dụng 1 mẫu thiết kế thuộc nhóm 
 	    List<Menu> listMenu() ;
 	}
 	```
+		
 		Giao diện trên có chứa các phương thức dùng để chèn, xóa, cập nhật menu và một phương thức trả về 1 menu với mã số cho trước.
 
 	- Giao diện [MenuService](https://github.com/shuleisanshi/myblog/blob/f337b7bded4bdc343227a467873e5cfdafac39c4/src/main/java/com/shulei/ssm/blog/service/MenuService.java) (vai trò Target):
@@ -67,6 +68,7 @@ Trong repo này, tác giả đã sử dụng 1 mẫu thiết kế thuộc nhóm 
 	    Menu getMenuById(Integer id);
 	}
 	```
+	
 		Giao diện này có chứa các phương thức dùng để chèn, xóa, cập nhật menu và một phương thức trả về 1 menu với mã số cho trước gần như giống hệt với adaptee MenuMapper, chỉ khác tên và khác kiểu trả về của phương thức update(Menu);
 	
 	- Lớp [MenuServiceImpl](https://github.com/shuleisanshi/myblog/blob/f337b7bded4bdc343227a467873e5cfdafac39c4/src/main/java/com/shulei/ssm/blog/service/impl/MenuService.java) (vai trò Adapter):
@@ -104,6 +106,7 @@ Trong repo này, tác giả đã sử dụng 1 mẫu thiết kế thuộc nhóm 
 	    }
 	}
 	```
+		
 		Lớp này cài đặt tất cả các phương thức trong giao diện MenuService (target).
 	
 	- Lớp [BackMenuController](https://github.com/shuleisanshi/myblog/blob/f337b7bded4bdc343227a467873e5cfdafac39c4/src/main/java/com/shulei/ssm/blog/controller/admin/BackMenuController.java) (vai trò Client):
@@ -158,6 +161,7 @@ Trong repo này, tác giả đã sử dụng 1 mẫu thiết kế thuộc nhóm 
 	    }
 	}
 	```
+		
 		Đây là lớp dùng để điều khiến, quản lý menu dành riêng cho admin. Lớp này có chứa 1 thuộc tính kiểu MenuService.
 	
    + **Nhận xét:** Khi đối chiếu với mẫu thiết kế Adapter chuẩn trên trang [GPCoder](https://gpcoder.com/4483-huong-dan-java-design-pattern-adapter/), em nhận thấy mẫu thiết kế tác giả dùng ở đây là hoàn toàn tương đồng với mô hình ***Object Adapter – Composition (Chứa trong)*** được nhắc trong bài viết (có lớp mới (Adapter) tham chiếu đến một đối tượng của lớp có sẵn với interface không tương thích (Adaptee), đồng thời cài đặt interface mà người dùng mong muốn (Target), khác với *Class Adapter – Inheritance (Kế thừa)* là mô hình mà lớp mới (Adapter) kế thừa lớp có sẵn với interface không tương thích (Adaptee)).
@@ -1004,7 +1008,8 @@ public class Hibernate implements ORMFramework {
 
 ## Repo 4: Link https://github.com/Anuken/Mindustry
 
-Sử dụng mẫu thiết kế:
+Đây là ... 
+Repo này có sử dụng các mẫu thiết kế:
 
 Strategy với:
 
