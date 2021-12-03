@@ -51,7 +51,7 @@ Trong repo này, tác giả đã sử dụng 1 mẫu thiết kế thuộc nhóm 
 	}
 	```
 		
-		Giao diện trên có chứa các phương thức dùng để chèn, xóa, cập nhật menu và một phương thức trả về 1 menu với mã số cho trước.
+	Giao diện trên có chứa các phương thức dùng để chèn, xóa, cập nhật menu và một phương thức trả về 1 menu với mã số cho trước.
 
 	- Giao diện [MenuService](https://github.com/shuleisanshi/myblog/blob/f337b7bded4bdc343227a467873e5cfdafac39c4/src/main/java/com/shulei/ssm/blog/service/MenuService.java) (vai trò Target):
 	```java
@@ -69,7 +69,7 @@ Trong repo này, tác giả đã sử dụng 1 mẫu thiết kế thuộc nhóm 
 	}
 	```
 	
-		Giao diện này có chứa các phương thức dùng để chèn, xóa, cập nhật menu và một phương thức trả về 1 menu với mã số cho trước gần như giống hệt với adaptee MenuMapper, chỉ khác tên và khác kiểu trả về của phương thức update(Menu);
+	Giao diện này có chứa các phương thức dùng để chèn, xóa, cập nhật menu và một phương thức trả về 1 menu với mã số cho trước gần như giống hệt với adaptee MenuMapper, chỉ khác tên và khác kiểu trả về của phương thức update(Menu);
 	
 	- Lớp [MenuServiceImpl](https://github.com/shuleisanshi/myblog/blob/f337b7bded4bdc343227a467873e5cfdafac39c4/src/main/java/com/shulei/ssm/blog/service/impl/MenuService.java) (vai trò Adapter):
 	```java
@@ -107,7 +107,7 @@ Trong repo này, tác giả đã sử dụng 1 mẫu thiết kế thuộc nhóm 
 	}
 	```
 		
-		Lớp này cài đặt tất cả các phương thức trong giao diện MenuService (target).
+	Lớp này cài đặt tất cả các phương thức trong giao diện MenuService (target).
 	
 	- Lớp [BackMenuController](https://github.com/shuleisanshi/myblog/blob/f337b7bded4bdc343227a467873e5cfdafac39c4/src/main/java/com/shulei/ssm/blog/controller/admin/BackMenuController.java) (vai trò Client):
 	```java
@@ -162,22 +162,23 @@ Trong repo này, tác giả đã sử dụng 1 mẫu thiết kế thuộc nhóm 
 	}
 	```
 		
-		Đây là lớp dùng để điều khiến, quản lý menu dành riêng cho admin. Lớp này có chứa 1 thuộc tính kiểu MenuService.
+	Đây là lớp dùng để điều khiến, quản lý menu dành riêng cho admin. Lớp này có chứa 1 thuộc tính kiểu MenuService.
 	
-   + **Nhận xét:** Khi đối chiếu với mẫu thiết kế Adapter chuẩn trên trang [GPCoder](https://gpcoder.com/4483-huong-dan-java-design-pattern-adapter/), em nhận thấy mẫu thiết kế tác giả dùng ở đây là hoàn toàn tương đồng với mô hình ***Object Adapter – Composition (Chứa trong)*** được nhắc trong bài viết (có lớp mới (Adapter) tham chiếu đến một đối tượng của lớp có sẵn với interface không tương thích (Adaptee), đồng thời cài đặt interface mà người dùng mong muốn (Target), khác với *Class Adapter – Inheritance (Kế thừa)* là mô hình mà lớp mới (Adapter) kế thừa lớp có sẵn với interface không tương thích (Adaptee)).
+   + **Nhận xét:** Khi đối chiếu với mẫu thiết kế Adapter chuẩn trên trang [GPCoder](https://gpcoder.com/4483-huong-dan-java-design-pattern-adapter/), em nhận thấy:
+   		- Mẫu thiết kế tác giả dùng ở đây là hoàn toàn tương đồng với mô hình ***Object Adapter – Composition (Chứa trong)*** được nhắc trong bài viết (có lớp mới (Adapter) tham chiếu đến một đối tượng của lớp có sẵn với interface không tương thích (Adaptee), đồng thời cài đặt interface mà người dùng mong muốn (Target), khác với *Class Adapter – Inheritance (Kế thừa)* là mô hình mà lớp mới (Adapter) kế thừa lớp có sẵn với interface không tương thích (Adaptee)).
 
-	Điểm khác biệt nhỏ ở đây là trong repo *my_blog* này, mẫu thiết kế Adapter được áp dụng trên quy mô rộng hơn (tới 10 lần) và ở trong môi trường phức tạp hơn so với trên GPCoder.
+		- Điểm khác biệt nhỏ ở đây là trong repo *my_blog* này, mẫu thiết kế Adapter được áp dụng trên quy mô rộng hơn (tới 10 lần) và ở trong môi trường phức tạp hơn so với trên GPCoder.
 
 
 ### Repo 2: Link https://github.com/simple-android-framework/android_design_patterns_analysis
 
-Đây là 1 repo tóm tắt (bằng tiếng Trung Quốc) về tất cả 23 mẫu thiết kế cơ bản. Trong đó, có 9 mẫu thiết kế có mã nguồn trong repo.
+* *Giới thiệu:* Đây là 1 repo tóm tắt (bằng tiếng Trung Quốc) về tất cả 23 mẫu thiết kế cơ bản. Trong đó, có 9 mẫu thiết kế có mã nguồn trong repo.
 
 Các mẫu được chia theo 3 nhóm mẫu thiết kế:
 
 #### Creational Design Patterns:
 
-*Repo có 2 mẫu thiết kế thuộc nhóm *Creational* là *Builder* và *Prototype*.*
+   *Repo có 3 mẫu thiết kế thuộc nhóm *Creational* là *Builder*, *Factory Method* và *Prototype*.*
 
 * [**Builder**](https://github.com/simple-android-framework/android_design_patterns_analysis/tree/master/builder/mr.simple):
   Tác giả đưa ra ví dụ về mẫu thiết kế Builder trong file [readme.md](https://github.com/simple-android-framework/android_design_patterns_analysis/blob/master/builder/mr.simple/readme.md) của mục này. Ví dụ về việc dùng mẫu thiết kế Builder để tạo các đối tượng máy tính (Computer):
@@ -290,6 +291,10 @@ Các mẫu được chia theo 3 nhóm mẫu thiết kế:
 	
 	Điểm khác biệt giữa 2 mẫu thiết kế là thành phần *Builder* của repo này là lớp trừu tượng, còn thành phần Builder ở trang GPCoder là một giao diện.
 	
+* [**Factory Method**](https://github.com/simple-android-framework/android_design_patterns_analysis/tree/master/factory-method/AigeStudio): 
+	
+     **Nhận xét:** Mẫu thiết kế được dùng trong repo hoàn toàn giống với mẫu chuẩn tại [GPCoder](https://gpcoder.com/4413-huong-dan-java-design-pattern-prototype/).
+	
 * [**Prototype**](https://github.com/simple-android-framework/android_design_patterns_analysis/tree/master/prototype/mr.simple):
     + Phần code tìm được trong repo gồm lớp *WordDocument* (implements *Cloneable*) đóng vai trò ConcretePrototype: lớp này thực thi interface được cung cấp bởi Prototype để copy (nhân bản) chính bản thân nó. Các lớp này chính là thể hiện cụ thể phương thức clone().
 	
@@ -368,7 +373,7 @@ Các mẫu được chia theo 3 nhóm mẫu thiết kế:
 
 #### Nhóm Structural Design Patterns:
 
-*Repo có 3 mẫu thiết kế thuộc nhóm *Structural* là *Bridge*, *Composite* và *Facade*.*
+   *Repo có 3 mẫu thiết kế thuộc nhóm *Structural* là *Bridge*, *Composite* và *Facade*.*
 
 * [**Bridge**](https://github.com/simple-android-framework/android_design_patterns_analysis/tree/master/bridge/shen0834):
 
@@ -540,7 +545,7 @@ Các mẫu được chia theo 3 nhóm mẫu thiết kế:
 	
 #### Nhóm Behaviorial Design Patterns:
 
-*Repo có 4 mẫu thiết kế thuộc nhóm *Behaviorial* là *Command*, *Iterator*, *Factory Method* và *Strategy*.*
+   *Repo có  mẫu thiết kế thuộc nhóm *Behaviorial* là *Command*, *Iterator* và *Strategy*.*
 	
 * [**Command**](https://github.com/simple-android-framework/android_design_patterns_analysis/tree/master/command/lijunhuayc/resource/command):
     Trong package [*command*](https://github.com/simple-android-framework/android_design_patterns_analysis/tree/master/command/lijunhuayc/resource/command), có các lớp và giao diện dùng để làm việc với các đối tượng [PeopleBean](https://github.com/simple-android-framework/android_design_patterns_analysis/blob/master/command/lijunhuayc/resource/command/PeopleBean.java) (chứa các thông tin của một người), gồm:
@@ -553,7 +558,8 @@ Các mẫu được chia theo 3 nhóm mẫu thiết kế:
 
 	}
 	```
-		Giao diện này thể hiện đúng vai trò của thành phần Command trong mẫu thiết kế Command.
+	Giao diện này thể hiện đúng vai trò của thành phần Command trong mẫu thiết kế Command.
+	
 	+ Lớp [ConcreteCommandImpl1](https://github.com/simple-android-framework/android_design_patterns_analysis/blob/master/command/lijunhuayc/resource/command/ConcreteCommandImpl1.java) (ngoài ra còn các lớp với vai trò tương đương trong cấu trúc chương trình là [ConcreteCommandImpl2](https://github.com/simple-android-framework/android_design_patterns_analysis/blob/master/command/lijunhuayc/resource/command/ConcreteCommandImpl2.java) và [ConcreteCommandImpl3](https://github.com/simple-android-framework/android_design_patterns_analysis/blob/master/command/lijunhuayc/resource/command/ConcreteCommandImpl.java)):
 	```java
 	public class ConcreteCommandImpl1 implements Command{
@@ -578,7 +584,8 @@ Các mẫu được chia theo 3 nhóm mẫu thiết kế:
 		}
 	    }
 	```
-		 Các lớp này thể hiện đúng vai trò của thành phần ConcreteCommand trong mẫu thiết kế Command.
+	Các lớp này thể hiện đúng vai trò của thành phần ConcreteCommand trong mẫu thiết kế Command.
+	
 	+ Lớp [ReceiverRole](https://github.com/simple-android-framework/android_design_patterns_analysis/blob/master/command/lijunhuayc/resource/command/ReceiverRole.java):
 	```java
 	public class ReceiverRole {
@@ -615,7 +622,8 @@ Các mẫu được chia theo 3 nhóm mẫu thiết kế:
 	      }
 	}
 	```
-		Lớp này thể hiện đúng vai trò của thành phần Receiver trong mẫu thiết kế Command.
+	Lớp này thể hiện đúng vai trò của thành phần Receiver trong mẫu thiết kế Command.
+	
 	+ Lớp [ClientRole](https://github.com/simple-android-framework/android_design_patterns_analysis/blob/master/command/lijunhuayc/resource/command/ClientRole.java):
 	```java
 	public class ClientRole {
@@ -744,10 +752,6 @@ Các mẫu được chia theo 3 nhóm mẫu thiết kế:
 	- ConcreteIterator (class ArrayIterator) cài đặt các phương thức của Iterator, giữ index khi duyệt qua các phần tử.
 	- Client (class AndroidMileage) đối tượng sử dụng Iterator Pattern, nó yêu cầu một iterator từ một đối tượng collection để duyệt qua các phần tử mà nó giữ. Các phương thức của iterator được sử dụng để truy xuất các phần tử từ collection theo một trình tự thích hợp.
     + Điểm khác biệt của project này là ở chỗ tất cả các lớp và giao diện đêu là inner class (lớp trong) của Client (class AndroidMileage).
-	
-* [**Factory Method**](https://github.com/simple-android-framework/android_design_patterns_analysis/tree/master/factory-method/AigeStudio): 
-	
-     **Nhận xét:** Mẫu thiết kế được dùng trong repo hoàn toàn giống với mẫu chuẩn tại [GPCoder](https://gpcoder.com/4413-huong-dan-java-design-pattern-prototype/).
 	
 * [**Strategy**]():
     + Repo minh họa về các hàm dùng để tính các phép toán cơ bản (+, -, *, /) với 2 số thục:
@@ -1008,164 +1012,259 @@ public class Hibernate implements ORMFramework {
 
 ## Repo 4: Link https://github.com/Anuken/Mindustry
 
-Đây là ... 
-Repo này có sử dụng các mẫu thiết kế:
+* *Giới thiệu:* Repo này chứa mã nguồn của Mindustry - một trò chơi trực tuyến, trong đó người chơi có nhiệm vụ bảo vệ thành phố khỏi sự tấn công của rất nhiều kẻ thù. Trong repo có sử dụng các mẫu thiết kế:
 
-Strategy với:
+### Các mẫu thiết kế thuộc nhóm Creational
 
-Interface: SlotAssignmentStrategy
+### Các mẫu thiết kế thuộc nhóm Structural
 
-```java
-public interface SlotAssignmentStrategy{
+### Các mẫu thiết kế thuộc nhóm Behaviorial
 
-    /** Updates the assignment of members to slots */
-    void updateSlotAssignments(Seq<SlotAssignment> assignments);
+* Mẫu thiết kế *Strategy* trong package [formations](https://github.com/Anuken/Mindustry/tree/master/core/src/mindustry/ai/formations) với các lớp và giao diện sau:
 
-    /** Calculates the number of slots from the assignment data. */
-    int calculateNumberOfSlots(Seq<SlotAssignment> assignments);
+	+ Interface [SlotAssignmentStrategy](https://github.com/Anuken/Mindustry/blob/master/core/src/mindustry/ai/formations/SlotAssignmentStrategy.java) đóng vai trò Strategy của mẫu thiết kế với nhiệm vụ định nghĩa các hành vi có thể có của một Strategy
 
-    /** Removes the slot assignment at the specified index. */
-    void removeSlotAssignment(Seq<SlotAssignment> assignments, int index);
+	```java
+	public interface SlotAssignmentStrategy{
 
-}
-```
-Các ConcreteStategy: BoundedSlotAssignmentStrategy, DistanceAssignmentStrategy, FreeSlotAssignmentStrategy
+	    /** Updates the assignment of members to slots */
+	    void updateSlotAssignments(Seq<SlotAssignment> assignments);
 
-```java
-public abstract class BoundedSlotAssignmentStrategy implements SlotAssignmentStrategy{
+	    /** Calculates the number of slots from the assignment data. */
+	    int calculateNumberOfSlots(Seq<SlotAssignment> assignments);
 
-    @Override
-    public abstract void updateSlotAssignments(Seq<SlotAssignment> assignments);
+	    /** Removes the slot assignment at the specified index. */
+	    void removeSlotAssignment(Seq<SlotAssignment> assignments, int index);
 
-    @Override
-    public int calculateNumberOfSlots(Seq<SlotAssignment> assignments){
-        //code
-    }
+	}
+	```
+	+ Các ConcreteStategy trong mẫu này là  lớp: [BoundedSlotAssignmentStrategy](https://github.com/Anuken/Mindustry/blob/master/core/src/mindustry/ai/formations/BoundedSlotAssignmentStrategy.java), [DistanceAssignmentStrategy](https://github.com/Anuken/Mindustry/blob/master/core/src/mindustry/ai/formations/DistanceAssignmentStrategy.java), [FreeSlotAssignmentStrategy](https://github.com/Anuken/Mindustry/blob/master/core/src/mindustry/ai/formations/FreeSlotAssignmentStrategy.java), [SoftRoleSlotAssignmentStrategy](https://github.com/Anuken/Mindustry/blob/master/core/src/mindustry/ai/formations/SoftRoleSlotAssignmentStrategy.java).
 
-    @Override
-    public void removeSlotAssignment(Seq<SlotAssignment> assignments, int index){
-        //code
-    }
-}
-public class DistanceAssignmentStrategy implements SlotAssignmentStrategy{
-    private final Vec3 vec = new Vec3();
-    private final FormationPattern form;
+	```java
+	public abstract class BoundedSlotAssignmentStrategy implements SlotAssignmentStrategy{
 
-    public DistanceAssignmentStrategy(FormationPattern form){
-        this.form = form;
-    }
-}
-public class FreeSlotAssignmentStrategy implements SlotAssignmentStrategy{
+	    @Override
+	    public abstract void updateSlotAssignments(Seq<SlotAssignment> assignments);
 
-    @Override
-    public void updateSlotAssignments(Seq<SlotAssignment> assignments){
-        // A very simple assignment algorithm: we simply go through
-        // each assignment in the list and assign sequential slot numbers
-        for(int i = 0; i < assignments.size; i++){
-            assignments.get(i).slotNumber = i;
-        }
-    }
+	    @Override
+	    public int calculateNumberOfSlots(Seq<SlotAssignment> assignments){
+		//code
+	    }
 
-    @Override
-    public int calculateNumberOfSlots(Seq<SlotAssignment> assignments){
-        return assignments.size;
-    }
+	    @Override
+	    public void removeSlotAssignment(Seq<SlotAssignment> assignments, int index){
+		//code
+	    }
+	}
 
-    @Override
-    public void removeSlotAssignment(Seq<SlotAssignment> assignments, int index){
-        assignments.remove(index);
-    }
+	public class DistanceAssignmentStrategy implements SlotAssignmentStrategy{
+	    private final Vec3 vec = new Vec3();
+	    private final FormationPattern form;
+		
+	    //some code
+	}
 
-}
-```
-BoundedSlotAssignmentStrategy có concrete: SoftRoleSlotAssignmentStrategy
+	public class FreeSlotAssignmentStrategy implements SlotAssignmentStrategy{
 
-```java
-public class SoftRoleSlotAssignmentStrategy extends BoundedSlotAssignmentStrategy{
-    //code
-}
-```
-Factory Method:
+	    @Override
+	    public void updateSlotAssignments(Seq<SlotAssignment> assignments){
+		// A very simple assignment algorithm: we simply go through each assignment in the list and assign sequential slot numbers
+		for(int i = 0; i < assignments.size; i++){
+		    assignments.get(i).slotNumber = i;
+		}
+	    }
 
-Creator: FormationPattern
+	    @Override
+	    public int calculateNumberOfSlots(Seq<SlotAssignment> assignments){
+		return assignments.size;
+	    }
 
-Concretecreator: CircleFormation, SquareFormation
+	    @Override
+	    public void removeSlotAssignment(Seq<SlotAssignment> assignments, int index){
+		assignments.remove(index);
+	    }
 
-Abstract Factory:
+	}
+	```
 
-UnitController->AIController
-Mindustry/core/src/mindustry/entities/units/UnitController.java
+	```java
+	public class SoftRoleSlotAssignmentStrategy extends BoundedSlotAssignmentStrategy{
+	    //some code
+	}
+	```
 
-```java
-public interface UnitController{
-}
-```
-Mindustry/core/src/mindustry/ai/types
-AIController->BuilderAI, DefenderAI, FlyingAI, FormationAI, GroundAI, HugAI, LogicAI, MinerAI, RepairAI
+    + **Nhận xét:** Khi đối chiếu với mẫu thiết kế chuẩn tại [GPCoder](https://gpcoder.com/4796-huong-dan-java-design-pattern-strategy/), có thể thấy mẫu thiết kế dùng trong repo này có đầy đủ các thành phần chuẩn. Bên cạnh đó, mẫu thiết kế trong Mindustry đã được biến tấu đi một chút khi trong các ConcreteStategy, có lớp trừu tượng *BoundedSlotAssignmentStrategy* và có lớp *SoftRoleSlotAssignmentStrategy* kế thừa lớp trừu tượng này.
 
-Facade:
+* Mẫu thiết kế *Factory Method* trong package [formations](https://github.com/Anuken/Mindustry/tree/master/core/src/mindustry/ai/formations) với các lớp và giao diện sau:
 
-facade: ContentList
-Mindustry/core/src/mindustry/ctype/ContentList.jav
+    + Creator [FormationPattern](https://github.com/Anuken/Mindustry/blob/master/core/src/mindustry/ai/formations/FormationPattern.java) là một lớp trừu tượng, là lớp cha của các Concrete Creator phía dưới.
+	```java
+	public abstract class FormationPattern{
+	    public int slots;
+	    /** Spacing between members. */
+	    public float spacing = 20f;
 
-```java
-public interface ContentList{
-    /** This method should create all the content. */
-    void load();
-}
-```
-subsystems: Blocks, Bullets, Items, Liquids, Loadouts, PLanets, SectorPresets, StatusEffects, TechTree, UnitTypes, Weathers
-Mindustry/core/src/mindustry/content
+	    /** Returns the location of the given slot index. */
+	    public abstract Vec3 calculateSlotLocation(Vec3 out, int slot);
 
-```java
-public class Blocks implements ContentList{
-    public static Block...
-}
-public class Bullets implements ContentList{
-    public static BulletType...
-}
-public class Items implements ContentList{
-    public static Item
-    scrap, copper, lead, graphite, coal, titanium, thorium, silicon, plastanium,
-    phaseFabric, surgeAlloy, sporePod, sand, blastCompound, pyratite, metaglass;
-}
-public class Loadouts implements ContentList{
-    public static Schematic
-    basicShard,
-    basicFoundation,
-    basicNucleus;
+	    /**
+	     * Returns true if the pattern can support the given number of slots
+	     * @param slotCount the number of slots
+	     * @return {@code true} if this pattern can support the given number of slots; {@code false} othervwise.
+	     */
+	    public boolean supportsSlots(int slotCount){
+		return true;
+	    }
+	}
+	```
 
-    @Override
-    public void load(){
-        basicShard = Schematics.readBase64...
-    }
-}
-public class TechTree implements ContentList{
-    static ObjectMap<UnlockableContent, TechNode> map = new ObjectMap<>();
-    static TechNode context = null;
+    + Các Concrete Creator: [CircleFormation](https://github.com/Anuken/Mindustry/tree/master/core/src/mindustry/ai/formations/patterns/CircleFormation), [SquareFormation](https://github.com/Anuken/Mindustry/blob/master/core/src/mindustry/ai/formations/patterns/SquareFormation.java) implement các phương thức của Creator *FormationPattern* theo nghiệp vụ riêng của nó là các creator dành riêng cho các mẫu hình tròn và hình vuông.
+	```java
+	public class CircleFormation extends FormationPattern {
+	    @Override
+	    public Vec3 calculateSlotLocation(Vec3 outLocation, int slotNumber) {
+		if(slots > 1){
+		    float angle = (360f * slotNumber) / slots + (slots == 8 ? 22.5f : 0);
+		    float radius = spacing / (float)Math.sin(180f / slots * Mathf.degRad);
+		    outLocation.set(Angles.trnsx(angle, radius), Angles.trnsy(angle, radius), angle);
+		}else{
+		    outLocation.set(0, spacing * 1.1f, 360f * slotNumber);
+		}
+		return outLocation;
+	    }
+	}
 
-    public static Seq<TechNode> all;
-    public static TechNode root;
-    //code
-}
-public class Weathers implements ContentList{
-    public static Weather
-    rain,
-    snow,
-    sandstorm,
-    sporestorm,
-    fog,
-    suspendParticles;
+	public class SquareFormation extends FormationPattern {
+	    @Override
+	    public Vec3 calculateSlotLocation(Vec3 out, int slot) {
+		int side = Mathf.ceil(Mathf.sqrt(slots + 1));
+		int cx = slot % side, cy = slot / side;
+		if(cx == side /2 && cy == side/2 && (side%2)==1){
+		    slot = slots;
+		    cx = slot % side;
+		    cy = slot / side;
+		}
+		return out.set(cx - (side/2f - 0.5f), cy - (side/2f - 0.5f), 0).scl(spacing);
+	    }
+	}
+	```
 
-    @Override
-    public void load(){
-        snow = ...
-        rain = ...
-        sandstorm = ...
-        sporestorm = ...
-        fog = ...
-        suspendParticles = ...
-    }
-}
-```   
--> dễ dàng quản lý, điều hướng
+    + **Nhận xét:** Mẫu thiết kế được dùng trong repo giống với mẫu chuẩn tại [Refactoring Guru](https://refactoring.guru/design-patterns/factory-method), và [GPCoder](https://gpcoder.com/4413-huong-dan-java-design-pattern-prototype/).
+
+* Mẫu thiết kế **Abstract Factory** trong package [units](https://github.com/Anuken/Mindustry/tree/master/core/src/mindustry/entities/units):
+
+    + Giao diện [UnitController](https://github.com/Anuken/Mindustry/core/src/mindustry/entities/units/UnitController.java) đóng vai trò Abstract Factory, có nhiệm vụ khai báo dạng interface hoặc abstract class chứa các phương thức để tạo ra các đối tượng abstract.
+	```java
+	public interface UnitController{
+	    void unit(Unit unit);
+	    Unit unit();
+
+	    default boolean isValidController(){
+		return true;
+	    }
+
+	    default void command(UnitCommand command){
+	    }
+
+	    default void updateUnit(){
+	    }
+
+	    default void removed(Unit unit){
+	    }
+
+	    default boolean isBeingControlled(Unit player){
+		return false;
+	    }
+	}
+	```
+    + Lớp [AIController](https://github.com/Anuken/Mindustry/core/src/mindustry/entities/units/AIController.java) đóng vai trò ConcreteFactory, có nhiệm vụxxây dựng, cài đặt các phương thức tạo các đối tượng cụ thể dùng AIAI.
+	```java
+	public class AIController implements UnitController{
+	    protected static final Vec2 vec = new Vec2();
+	    protected static final int timerTarget = 0, timerTarget2 = 1, timerTarget3 = 2, timerTarget4 = 3;
+
+	    protected Unit unit;
+	    protected Interval timer = new Interval(4);
+	    protected AIController fallback;
+
+	    /** main target that is being faced */
+	    protected Teamc target;
+
+	    {
+		timer.reset(0, Mathf.random(40f));
+		timer.reset(1, Mathf.random(60f));
+	    }
+
+	    @Override
+	    ... //some code (chi tiết tại link trên)
+	}
+	```
+
+	AIController->BuilderAI, DefenderAI, FlyingAI, FormationAI, GroundAI, HugAI, LogicAI, MinerAI, RepairAI
+	[Link...]
+	Facade:
+
+	facade: ContentList
+	Mindustry/core/src/mindustry/ctype/ContentList.jav
+
+	```java
+	public interface ContentList{
+	    /** This method should create all the content. */
+	    void load();
+	}
+	```
+	subsystems: Blocks, Bullets, Items, Liquids, Loadouts, PLanets, SectorPresets, StatusEffects, TechTree, UnitTypes, Weathers
+	Mindustry/core/src/mindustry/content
+
+	```java
+	public class Blocks implements ContentList{
+	    public static Block...
+	}
+	public class Bullets implements ContentList{
+	    public static BulletType...
+	}
+	public class Items implements ContentList{
+	    public static Item
+	    scrap, copper, lead, graphite, coal, titanium, thorium, silicon, plastanium,
+	    phaseFabric, surgeAlloy, sporePod, sand, blastCompound, pyratite, metaglass;
+	}
+	public class Loadouts implements ContentList{
+	    public static Schematic
+	    basicShard,
+	    basicFoundation,
+	    basicNucleus;
+
+	    @Override
+	    public void load(){
+		basicShard = Schematics.readBase64...
+	    }
+	}
+	public class TechTree implements ContentList{
+	    static ObjectMap<UnlockableContent, TechNode> map = new ObjectMap<>();
+	    static TechNode context = null;
+
+	    public static Seq<TechNode> all;
+	    public static TechNode root;
+	    //code
+	}
+	public class Weathers implements ContentList{
+	    public static Weather
+	    rain,
+	    snow,
+	    sandstorm,
+	    sporestorm,
+	    fog,
+	    suspendParticles;
+
+	    @Override
+	    public void load(){
+		snow = ...
+		rain = ...
+		sandstorm = ...
+		sporestorm = ...
+		fog = ...
+		suspendParticles = ...
+	    }
+	}
+	```   
+	-> dễ dàng quản lý, điều hướng
